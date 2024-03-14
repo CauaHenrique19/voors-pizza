@@ -55,7 +55,7 @@ describe('Find Flavours Controller', () => {
     expect(httpResponse).toEqual(notFound());
   });
 
-  test('Should return 500 if authentication throws', async () => {
+  test('Should return 500 if findFlavours throws', async () => {
     const { sut, findFlavoursStub } = makeSut();
     jest.spyOn(findFlavoursStub, 'find').mockImplementationOnce(() => {
       throw new Error();
