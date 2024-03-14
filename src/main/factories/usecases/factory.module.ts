@@ -1,9 +1,21 @@
 import { Module } from '@nestjs/common';
-import { PersonalizationPrismaRepository } from 'src/infra/orm/repositories';
-import { findPersonalizationsFactory } from 'src/main/factories/usecases';
+import {
+  FlavourPrismaRepository,
+  PersonalizationPrismaRepository,
+} from 'src/infra/orm/repositories';
+import {
+  findFlavoursFactory,
+  findPersonalizationsFactory,
+} from 'src/main/factories/usecases';
 
 @Module({
-  providers: [PersonalizationPrismaRepository, findPersonalizationsFactory],
-  exports: [findPersonalizationsFactory],
+  providers: [
+    PersonalizationPrismaRepository,
+    FlavourPrismaRepository,
+
+    findPersonalizationsFactory,
+    findFlavoursFactory,
+  ],
+  exports: [findPersonalizationsFactory, findFlavoursFactory],
 })
 export class FactoryModule {}
