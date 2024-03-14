@@ -13,6 +13,8 @@ services:
       POSTGRES_USER: voorspizza
       POSTGRES_PASSWORD: voorspizza
     command: -p 5433
+    networks:
+      - voorspizza
   api:
     container_name: voorspizza_api_container
     build:
@@ -24,8 +26,12 @@ services:
     env_file: ./.env
     environment:
       - PORT=3001
-      - DATABASE_URL=postgresql://voorspizza:voorspizza@localhost:5433/voorspizza
-    volumes:
-      - ./docker-volumes/voorspizza_api_container/src:/app/src
+      - DATABASE_URL=postgresql://voorspizza:voorspizza@postgres:5433/voorspizza
     depends_on:
       - postgres
+    networks:
+      - voorspizza
+
+networks:
+  voorspizza:
+    driver: bridge
