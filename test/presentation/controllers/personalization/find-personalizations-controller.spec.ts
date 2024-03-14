@@ -55,7 +55,7 @@ describe('Find Personalizations Controller', () => {
     expect(httpResponse).toEqual(notFound());
   });
 
-  test('Should return 500 if authentication throws', async () => {
+  test('Should return 500 if findPersonalizations throws', async () => {
     const { sut, findPersonalizationsStub } = makeSut();
     jest.spyOn(findPersonalizationsStub, 'find').mockImplementationOnce(() => {
       throw new Error();
