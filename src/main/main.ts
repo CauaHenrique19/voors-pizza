@@ -6,6 +6,8 @@ import { CONFIG } from 'src/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Voors Pizza')
     .setDescription('API para receber pedidos de uma pizzaria')
