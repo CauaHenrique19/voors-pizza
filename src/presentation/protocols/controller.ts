@@ -1,5 +1,5 @@
-import { HttpResponse } from './http'
+import { HttpResponse } from 'src/presentation/protocols';
 
 export interface Controller<T = any> {
-  lidar: (request: T) => Promise<HttpResponse>
+  handle: (request: T) => Promise<HttpResponse>;
 }
