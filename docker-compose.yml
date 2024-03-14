@@ -24,7 +24,7 @@ services:
     env_file: ./.env
     environment:
       - PORT=3001
-      - DATABASE_URL=postgresql://voorspizza:voorspizza@localhost:5433/user
+      - DATABASE_URL=postgresql://voorspizza:voorspizza@localhost:5433/voorspizza
     volumes:
       - ./docker-volumes/voorspizza_api_container/src:/app/src
     depends_on:
