@@ -31,3 +31,13 @@ model Personalization {
 
   @@map("tb_personalization")
 }
+
+model Size {
+  id              Int      @id @default(autoincrement())
+  description     String   @db.VarChar(30)
+  value           Float
+  preparationTime Int?     @map("preparation_time")
+  createdAt       DateTime @map("created_at")
+
+  @@map("tb_size")
+}
