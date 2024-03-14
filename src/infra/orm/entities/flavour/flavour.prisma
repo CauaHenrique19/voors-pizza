@@ -1,0 +1,8 @@
+model Flavour {
+    id                        Int      @id @default(autoincrement())
+    description               String   @db.VarChar(30)
+    adittionalPreparationTime Int?     @map("adittional_preparation_time")
+    createdAt                 DateTime @map("created_at")
+
+    @@map("tb_flavour")
+}
