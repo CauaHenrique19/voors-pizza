@@ -8,7 +8,7 @@ import {
 } from 'src/presentation/helpers';
 import {
   FlavourNotFoundError,
-  PersonalizationNotFound,
+  PersonalizationNotFoundError,
   RepeatedPersonalizationError,
   SizeNotFoundError,
 } from 'src/domain/errors';
@@ -26,7 +26,7 @@ export class CreateOrderController implements Controller {
       if (
         error instanceof SizeNotFoundError ||
         error instanceof FlavourNotFoundError ||
-        error instanceof PersonalizationNotFound
+        error instanceof PersonalizationNotFoundError
       ) {
         return notFound(error);
       }
