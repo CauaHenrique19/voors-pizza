@@ -10,6 +10,7 @@ import {
 import {
   createOrderFactory,
   findFlavoursFactory,
+  findOrderByIdFactory,
   findPersonalizationsFactory,
   findSizesFactory,
 } from 'src/main/factories/usecases';
@@ -30,12 +31,14 @@ import { PrismaTransactionManager } from 'src/infra/orm/transaction-manager';
     findFlavoursFactory,
     findSizesFactory,
     createOrderFactory,
+    findOrderByIdFactory,
   ],
   exports: [
     findPersonalizationsFactory,
     findFlavoursFactory,
     findSizesFactory,
     createOrderFactory,
+    findOrderByIdFactory,
   ],
 })
 export class FactoryModule {}
