@@ -19,18 +19,18 @@ Como padrão a porta da aplicação foi definida na imagem docker como `3001`
 
 Então para acessá-la:
 
-URL: `http://localhost:3000/`
+URL: `http://localhost:3000/` \
 Documentação com Swagger: `http://localhost:3000/api#/`
 
 A aplicação conta com 99% de cobertura de testes, cobrindo da camada `Data` até a `Main`
 
-## Installation
+## Instalação
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Rodando em localhost
 
 ```bash
 # development
@@ -40,10 +40,10 @@ $ npm run start
 $ npm run start:dev
 
 # production mode
-$ npm run start:prod
+$ npm run start:migrate:prod
 ```
 
-## Test
+## Testes
 
 ```bash
 # unit tests
@@ -93,11 +93,11 @@ Baseado no que foi informado na descrição do teste, optei por implementar algu
 
 Escolhi ir por esse caminho, pois na minha visão é o mais coerente e otimizado para a situação, evitando desperdícios de dados e requisições desnecessárias.
 
-- `GET - Flavours`
-- `GET - Sizes`
-- `GET - Personalizations`
-- `GET - Order`
-- `POST - Order`
+- `GET - /flavours`
+- `GET - /sizes`
+- `GET - /personalizations`
+- `GET - /order/:id`
+- `POST - /order`
 
 A documentação da API foi implementada com Swagger e se encontra no endpoint: `http://localhost:3000/api#/`
 
@@ -128,3 +128,13 @@ Optei por implementar Clean Architecture com todas as camadas utilizadas, propor
   camada de apresentação da nossa api para o mundo externo, nela os casos de uso são executados e os status codes são gerenciados, nela também se encontram todos os tratamentos de exceções.
 - `Main`
   camada de aplicação da nossa api com Nest, nela é aplicada a funcionalidade principal do sistema, nesse caso a API contruída com NestJS. Nela também ficam as injeções de dependências e factories de `casos de uso`, `repositories` e etc.
+
+## GitFlow
+
+Baseado na minha experiência, implementei um gerenciamento de git utilizando gitflow. Então como branch de produção, utilizei a `master` e como branch de dev, utilizei a `develop`, é dessa branch que as features são criadas. Então foram criadas nesse projeto, cada branch para uma funcionalidade do projeto.
+
+- `feature/personalization`
+- `feature/size`
+- `feature/flavour`
+- `feature/order`
+- `feature/misc`
