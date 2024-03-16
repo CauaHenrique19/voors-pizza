@@ -8,7 +8,7 @@ export interface CreateOrderRepository {
 }
 
 export namespace CreateOrderRepository {
-  export type Parameters = Omit<OrderModel, 'id'>;
+  export type Parameters = Omit<OrderModel, 'id' | 'itens'>;
   export type Transaction = unknown;
-  export type Result = OrderModel;
+  export type Result = Omit<OrderModel, 'itens'>;
 }

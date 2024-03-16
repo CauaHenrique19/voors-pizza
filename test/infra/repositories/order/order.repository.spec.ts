@@ -21,17 +21,26 @@ describe('Order Prisma Repository', () => {
       const sut = makeSut();
 
       const now = new Date();
-      const account = await sut.create({
+      const order = await sut.create({
         createdAt: now,
         total: 5,
         totalPreparationTime: 15,
       });
 
-      expect(account).toBeTruthy();
-      expect(account.id).toBeTruthy();
-      expect(account.createdAt).toStrictEqual(now);
-      expect(account.total).toBe(5);
-      expect(account.totalPreparationTime).toBe(15);
+      expect(order).toBeTruthy();
+      expect(order.id).toBeTruthy();
+      expect(order.createdAt).toStrictEqual(now);
+      expect(order.total).toBe(5);
+      expect(order.totalPreparationTime).toBe(15);
+    });
+  });
+
+  describe('find()', () => {
+    test('Should return an order on find success', async () => {
+      const sut = makeSut();
+      const order = await sut.find({ id: 1 });
+
+      expect(order.id).toBe(1);
     });
   });
 });

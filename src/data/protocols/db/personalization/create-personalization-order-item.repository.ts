@@ -8,7 +8,10 @@ export interface CreatePersonalizationOrderItemRepository {
 }
 
 export namespace CreatePersonalizationOrderItemRepository {
-  export type Parameters = Omit<PersonalizationOrderItemModel, 'id'>[];
+  export type Parameters = Omit<
+    PersonalizationOrderItemModel,
+    'id' | 'personalization'
+  >[];
   export type Transaction = unknown;
   export type Result = void;
 }

@@ -1,8 +1,9 @@
 model Order {
-    id                   Int      @id @default(autoincrement())
+    id                   Int         @id @default(autoincrement())
     total                Float
-    totalPreparationTime Int      @map("total_preparation_time")
-    createdAt            DateTime @map("created_at")
+    totalPreparationTime Int         @map("total_preparation_time")
+    createdAt            DateTime    @map("created_at")
+    itens                OrderItem[]
 
     @@map("tb_order")
 }

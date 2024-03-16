@@ -106,7 +106,7 @@ export const makeFakeItensWithRepeatedPersonalization =
     };
   };
 
-export const makeFakeOrder = (): OrderModel => {
+export const makeFakeOrder = (): Omit<OrderModel, 'itens'> => {
   return {
     id: 1,
     total: 63.5,
@@ -115,7 +115,10 @@ export const makeFakeOrder = (): OrderModel => {
   };
 };
 
-export const makeFakeOrderFromItemWithoutPersonalization = (): OrderModel => {
+export const makeFakeOrderFromItemWithoutPersonalization = (): Omit<
+  OrderModel,
+  'itens'
+> => {
   return {
     id: 1,
     total: 50.5,
@@ -126,7 +129,7 @@ export const makeFakeOrderFromItemWithoutPersonalization = (): OrderModel => {
 
 export const makeFakeOrderItem = (): Omit<
   OrderItemModel,
-  'order' | 'flavour' | 'size'
+  'order' | 'flavour' | 'size' | 'personalizations'
 > => {
   return {
     id: 1,

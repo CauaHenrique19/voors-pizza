@@ -1,6 +1,9 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { CreateOrderUseCase } from 'src/domain/usecases/order';
+import {
+  CreateOrderUseCase,
+  FindOrderByIdUseCase,
+} from 'src/domain/usecases/order';
 import {
   makeFakeItens,
   makeFakeItensWithInvalidFlavour,
@@ -12,7 +15,12 @@ import {
 import { CreateOrderController } from 'src/presentation/controllers';
 import { OrderModule } from 'src/main/controllers/order/order.module';
 import { OrderController } from 'src/main/controllers/order/order.controller';
-import { BuildCreateOrderControllerFactory } from 'src/main/factories/controllers';
+import {
+  BuildCreateOrderControllerFactory,
+  BuildFindOrderByIdControllerFactory,
+} from 'src/main/factories/controllers';
+import { FactoryModule } from 'src/main/factories/usecases/factory.module';
+import { makeFakeFullOrder } from 'test/domain/mocks/order/find-order.mock';
 
 const makeCreateOrder = () => {
   class CreateOrderStub implements CreateOrderUseCase {
@@ -24,18 +32,31 @@ const makeCreateOrder = () => {
   return new CreateOrderStub();
 };
 
+const makeFindOrderById = () => {
+  class FindOrderStub implements FindOrderByIdUseCase {
+    async find(): Promise<FindOrderByIdUseCase.Result> {
+      return new Promise((resolve) => resolve(makeFakeFullOrder()));
+    }
+  }
+
+  return new FindOrderStub();
+};
+
 export interface sutTypes {
   sut: CreateOrderController;
   createOrderStub: CreateOrderUseCase;
+  findOrderByIdStub: FindOrderByIdUseCase;
 }
 
 const makeSut = (): sutTypes => {
   const createOrderStub = makeCreateOrder();
+  const findOrderByIdStub = makeFindOrderById();
   const sut = new CreateOrderController(createOrderStub);
 
   return {
     sut,
     createOrderStub,
+    findOrderByIdStub,
   };
 };
 
@@ -119,13 +140,17 @@ describe('Order Controller', () => {
       });
 
       const moduleRef = await Test.createTestingModule({
-        imports: [OrderModule],
+        imports: [FactoryModule],
         controllers: [OrderController],
         providers: [
           {
             provide: BuildCreateOrderControllerFactory.name,
             useFactory: () =>
               new BuildCreateOrderControllerFactory(createOrderStub),
+          },
+          {
+            provide: BuildFindOrderByIdControllerFactory.name,
+            useClass: BuildFindOrderByIdControllerFactory,
           },
         ],
       }).compile();
@@ -137,6 +162,61 @@ describe('Order Controller', () => {
         .post(`/orders/`)
         .send({ items: makeFakeItens().items })
         .expect(500);
+    });
+  });
+
+  describe('GET /order/:id', () => {
+    it('Should return 200 on find order', async () => {
+      const moduleRef = await Test.createTestingModule({
+        imports: [OrderModule],
+      }).compile();
+
+      const app = moduleRef.createNestApplication();
+      await app.init();
+
+      await request(app.getHttpServer()).get(`/orders/1`).expect(200);
+    });
+
+    it('Should return 404 when order not found', async () => {
+      const moduleRef = await Test.createTestingModule({
+        imports: [OrderModule],
+      }).compile();
+
+      const app = moduleRef.createNestApplication();
+      await app.init();
+
+      await request(app.getHttpServer())
+        .post(`/orders/99999999999`)
+        .expect(404);
+    });
+
+    it('Should return 500 on find order', async () => {
+      const { findOrderByIdStub } = makeSut();
+
+      jest.spyOn(findOrderByIdStub, 'find').mockImplementationOnce(() => {
+        throw new Error('Testing Error');
+      });
+
+      const moduleRef = await Test.createTestingModule({
+        imports: [FactoryModule],
+        controllers: [OrderController],
+        providers: [
+          {
+            provide: BuildCreateOrderControllerFactory.name,
+            useClass: BuildCreateOrderControllerFactory,
+          },
+          {
+            provide: BuildFindOrderByIdControllerFactory.name,
+            useFactory: () =>
+              new BuildFindOrderByIdControllerFactory(findOrderByIdStub),
+          },
+        ],
+      }).compile();
+
+      const app = moduleRef.createNestApplication();
+      await app.init();
+
+      await request(app.getHttpServer()).get(`/orders/1`).expect(500);
     });
   });
 });

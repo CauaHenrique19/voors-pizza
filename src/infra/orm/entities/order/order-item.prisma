@@ -5,6 +5,8 @@ model OrderItem {
     flavourId Int      @map("flavour_id")
     createdAt DateTime @map("created_at")
 
+    personalizations PersonalizationOrderItem[]
+
     order   Order   @relation(fields: [orderId], references: [id])
     size    Size    @relation(fields: [sizeId], references: [id])
     flavour Flavour @relation(fields: [flavourId], references: [id])
