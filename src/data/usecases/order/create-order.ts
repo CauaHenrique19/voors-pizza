@@ -15,7 +15,7 @@ import {
 } from 'src/domain/models';
 import {
   FlavourNotFoundError,
-  PersonalizationNotFound,
+  PersonalizationNotFoundError,
   RepeatedPersonalizationError,
   SizeNotFoundError,
 } from 'src/domain/errors';
@@ -94,7 +94,7 @@ export class CreateOrder implements CreateOrderUseCase {
       );
 
       if (!haveAllPersonalizations) {
-        throw new PersonalizationNotFound();
+        throw new PersonalizationNotFoundError();
       }
     }
 
