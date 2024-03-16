@@ -1,30 +1,28 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# VoorsPizza - API
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+API contruída com NestJS, Typescript e NodeJs para receber pedidos de uma pizzaria.
+
+## Tecnologias Utilizadas
+
+- `API`: NestJS
+- `ORM`: Prisma
+- `Validações de Requisições`: Class Validator e Class Transformer
+- `Testes`: Jest
+- `Documentação de API`: Swagger
+- `Containers`: Docker
+
+## Informações Importantes
+
+Como padrão a porta da aplicação foi definida na imagem docker como `3001`
+
+Então para acessá-la:
+
+URL: `http://localhost:3000/`
+Documentação com Swagger: `http://localhost:3000/api#/`
+
+A aplicação conta com 99% de cobertura de testes, cobrindo da camada `Data` até a `Main`
 
 ## Installation
 
@@ -49,25 +47,84 @@ $ npm run start:prod
 
 ```bash
 # unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
+$ npm run test:unit
 
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
+## Docker
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+A aplicação foi construída para ser executada com containers, então ela está pronta para ser utilizada com docker.
 
-## Stay in touch
+```bash
+# build image
+$ docker-compose up
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Decisões Técnicas
 
-## License
+## Modelagem
 
-Nest is [MIT licensed](LICENSE).
+De acordo com meus conhecimentos em modelagem, criei essa estrutura que consegue entregar flexibilidade permitindo o cadastro de novos sabores, tamanhos e personalizações. Também optei por salvar as informações de tempo total de preparo e valor do pedido em banco para evitar cálculos via código.
+
+Adicionei o campo `createdAt` em todas as tabelas para permitir auditoria simples sobre informações de cadastro do registro.
+
+Legenda:
+
+- Order `(tb_order)`
+  representa o pedido realizado pelo usuário
+- OrderItem `(tb_order_item)`
+  representa cada pizza montada pelo usuário
+- PersonalizationOrderItem `(tb_personalization_order_item)`
+  representa as personalizações selecionadas de cada pizza
+- Personalization `(tb_personalization)`
+  representa as personalizações cadastradas (Extra bacon...)
+- Size `(tb_size)`
+  representa os tamanhos de pizza disponíveis
+- Flavour `(tb_flavour)`
+  representa os sabores de pizza disponíveis
+
+&nbsp;&nbsp;![Database Diagram](./db-diagram.png)
+
+## Endpoints
+
+Baseado no que foi informado na descrição do teste, optei por implementar alguns endpoints de `GET` para buscar informações que podem ser importantes pro frontend e decidi implementar um endpoint `POST` para criação de pedidos.
+
+Escolhi ir por esse caminho, pois na minha visão é o mais coerente e otimizado para a situação, evitando desperdícios de dados e requisições desnecessárias.
+
+- `GET - Flavours`
+- `GET - Sizes`
+- `GET - Personalizations`
+- `GET - Order`
+- `POST - Order`
+
+A documentação da API foi implementada com Swagger e se encontra no endpoint: `http://localhost:3000/api#/`
+
+## Status Code
+
+Todos os endpoints podem retornar esses seguintes status:
+
+- `200 - Ok`
+  Processamento realizado com sucesso
+- `400 - Bad Request`
+  Envio de valores/parametros inválidos
+- `404 - Not Found`
+  Envio de dados inexistentes na base
+- `500 - Server Error`
+  Falha inesperada no processamento
+
+## Arquitetura
+
+Optei por implementar Clean Architecture com todas as camadas utilizadas, proporcionando um isolamento de cada camada, assim desacoplando o código de dependências externas. Também implementei um esquema de injeção de dependências com as ferramentas que o Nest proporciona visando a modularização da arquitetura. Futuramente a aplicação está pronta para receber novos módulos e crescer conforme a necessidade. Então aqui vai uma breve explicação das camadas utilizadas.
+
+- `Domain`
+  camada mais interna da aplicação, onde são definidos os `casos de uso`, `models` e `erros` que a aplicação pode utilizar
+- `Data`
+  camada que define os protocolos a serem implementados, como repositories para acesso a banco de dados, gerenciador de transactions, adapters e outras aplicações. Nela também se concentram todas as implementações reais com regras de negócio dos `casos de uso` definidos na camada `Domain`
+- `Infra`
+  camada onde são implementados os protocolos definidos na camada `Data`, nela se concentram as implementações de repositories com seus respectivos ORMs, gerenciadores de transações e outras aplicações.
+- `Presentation`
+  camada de apresentação da nossa api para o mundo externo, nela os casos de uso são executados e os status codes são gerenciados, nela também se encontram todos os tratamentos de exceções.
+- `Main`
+  camada de aplicação da nossa api com Nest, nela é aplicada a funcionalidade principal do sistema, nesse caso a API contruída com NestJS. Nela também ficam as injeções de dependências e factories de `casos de uso`, `repositories` e etc.
