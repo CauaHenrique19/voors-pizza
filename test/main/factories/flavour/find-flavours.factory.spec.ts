@@ -1,6 +1,6 @@
-import { FindFlavoursUseCase } from '/src/domain/usecases';
-import { BuildFindFlavoursControllerFactory } from '/src/main/factories/controllers';
-import { FindFlavoursController } from '/src/presentation/controllers';
+import { FindFlavoursUseCase } from 'src/domain/usecases';
+import { BuildFindFlavoursControllerFactory } from 'src/main/factories/controllers';
+import { FindFlavoursController } from 'src/presentation/controllers';
 
 const makeFindFlavours = () => {
   class FindFlavoursStub implements FindFlavoursUseCase {

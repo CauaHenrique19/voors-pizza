@@ -1,10 +1,10 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { FlavourModule } from '/src/main/controllers/flavour/flavour.module';
-import { FlavourController } from '/src/main/controllers/flavour/flavour.controller';
-import { FindFlavoursUseCase } from '/src/domain/usecases';
-import { FindFlavoursController } from '/src/presentation/controllers';
-import { BuildFindFlavoursControllerFactory } from '/src/main/factories/controllers';
+import { FlavourModule } from 'src/main/controllers/flavour/flavour.module';
+import { FlavourController } from 'src/main/controllers/flavour/flavour.controller';
+import { FindFlavoursUseCase } from 'src/domain/usecases';
+import { FindFlavoursController } from 'src/presentation/controllers';
+import { BuildFindFlavoursControllerFactory } from 'src/main/factories/controllers';
 
 const makeFindFlavour = () => {
   class FindFlavoursStub implements FindFlavoursUseCase {

@@ -1,6 +1,6 @@
-import { FindPersonalizationsUseCase } from '/src/domain/usecases';
-import { BuildFindPersonalizationsControllerFactory } from '/src/main/factories/controllers';
-import { FindPersonalizationsController } from '/src/presentation/controllers';
+import { FindPersonalizationsUseCase } from 'src/domain/usecases';
+import { BuildFindPersonalizationsControllerFactory } from 'src/main/factories/controllers';
+import { FindPersonalizationsController } from 'src/presentation/controllers';
 
 const makeFindPersonalizations = () => {
   class FindPersonalizationsStub implements FindPersonalizationsUseCase {

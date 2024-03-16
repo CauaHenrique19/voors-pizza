@@ -1,6 +1,6 @@
-import { FindSizesUseCase } from '/src/domain/usecases';
-import { BuildFindSizesControllerFactory } from '/src/main/factories/controllers';
-import { FindSizesController } from '/src/presentation/controllers';
+import { FindSizesUseCase } from 'src/domain/usecases';
+import { BuildFindSizesControllerFactory } from 'src/main/factories/controllers';
+import { FindSizesController } from 'src/presentation/controllers';
 
 const makeFindSizes = () => {
   class FindSizesStub implements FindSizesUseCase {
