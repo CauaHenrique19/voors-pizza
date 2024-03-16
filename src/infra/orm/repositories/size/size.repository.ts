@@ -1,7 +1,12 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { FindSizesRepository } from 'src/data/protocols/db';
+import {
+  FindSizeByIdRepository,
+  FindSizesRepository,
+} from 'src/data/protocols/db';
 
-export class SizePrismaRepository implements FindSizesRepository {
+export class SizePrismaRepository
+  implements FindSizesRepository, FindSizeByIdRepository
+{
   private sizeRepository: Prisma.SizeDelegate;
 
   constructor() {
@@ -11,5 +16,19 @@ export class SizePrismaRepository implements FindSizesRepository {
 
   find(): Promise<FindSizesRepository.Result> {
     return this.sizeRepository.findMany();
+  }
+
+  async findById(
+    parameters: FindSizeByIdRepository.Parameters,
+  ): Promise<FindSizeByIdRepository.Result> {
+    if (Array.isArray(parameters.id)) {
+      return await this.sizeRepository.findMany({
+        where: { id: { in: parameters.id } },
+      });
+    }
+
+    return await this.sizeRepository.findFirst({
+      where: { id: parameters.id },
+    });
   }
 }

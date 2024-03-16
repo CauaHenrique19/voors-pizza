@@ -10,12 +10,12 @@ export const makeFakePersonalizations = (): PersonalizationModel[] => [
     createdAt: new Date(),
   },
   {
-    id: 1,
+    id: 2,
     description: 'Sem Cebola',
     createdAt: new Date(),
   },
   {
-    id: 1,
+    id: 3,
     description: 'Borda Recheada',
     adittionalPreparationTime: 5,
     value: 5,

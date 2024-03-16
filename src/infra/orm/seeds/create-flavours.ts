@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { FlavourModel } from '/src/domain/models';
+import { FlavourModel } from 'src/domain/models';
 
 export const createFlavours = async () => {
   const flavours: Pick<

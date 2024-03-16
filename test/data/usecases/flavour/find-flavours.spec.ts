@@ -9,12 +9,12 @@ export const makeFakeFlavours = (): FlavourModel[] => [
     createdAt: new Date(),
   },
   {
-    id: 1,
+    id: 2,
     description: 'Marguerita',
     createdAt: new Date(),
   },
   {
-    id: 1,
+    id: 3,
     description: 'Portuguesa',
     adittionalPreparationTime: 5,
     createdAt: new Date(),

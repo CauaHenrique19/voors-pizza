@@ -1,10 +1,10 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { FindSizesUseCase } from '/src/domain/usecases';
-import { FindSizesController } from '/src/presentation/controllers';
-import { BuildFindSizesControllerFactory } from '/src/main/factories/controllers';
-import { SizeModule } from '/src/main/controllers/size/size.module';
-import { SizeController } from '/src/main/controllers/size/size.controller';
+import { FindSizesUseCase } from 'src/domain/usecases';
+import { FindSizesController } from 'src/presentation/controllers';
+import { BuildFindSizesControllerFactory } from 'src/main/factories/controllers';
+import { SizeModule } from 'src/main/controllers/size/size.module';
+import { SizeController } from 'src/main/controllers/size/size.controller';
 
 const makeFindSizes = () => {
   class FindSizesStub implements FindSizesUseCase {

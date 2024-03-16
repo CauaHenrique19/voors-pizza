@@ -1,10 +1,10 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { PersonalizationModule } from '/src/main/controllers/personalization/personalization.module';
-import { PersonalizationController } from '/src/main/controllers/personalization/personalization.controller';
-import { FindPersonalizationsUseCase } from '/src/domain/usecases';
-import { FindPersonalizationsController } from '/src/presentation/controllers';
-import { BuildFindPersonalizationsControllerFactory } from '/src/main/factories/controllers';
+import { PersonalizationModule } from 'src/main/controllers/personalization/personalization.module';
+import { PersonalizationController } from 'src/main/controllers/personalization/personalization.controller';
+import { FindPersonalizationsUseCase } from 'src/domain/usecases';
+import { FindPersonalizationsController } from 'src/presentation/controllers';
+import { BuildFindPersonalizationsControllerFactory } from 'src/main/factories/controllers';
 
 const makeFindPersonalizations = () => {
   class FindPersonalizationsStub implements FindPersonalizationsUseCase {

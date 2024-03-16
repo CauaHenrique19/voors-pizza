@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { FlavourPrismaRepository } from 'src/infra/orm/repositories';
+import { FlavourModel } from 'src/domain/models';
 
 describe('Flavour Prisma Repository', () => {
   const prismaClient = new PrismaClient();
@@ -24,18 +25,42 @@ describe('Flavour Prisma Repository', () => {
         .spyOn(sut, 'find')
         .mockReturnValueOnce(new Promise((resolve) => resolve([])));
 
-      const account = await sut.find();
+      const flavours = await sut.find();
 
-      expect(account).toBeTruthy();
-      expect(account.length).toBe(0);
+      expect(flavours).toBeTruthy();
+      expect(flavours.length).toBe(0);
     });
 
     test('Should return an array of flavours', async () => {
       const sut = makeSut();
-      const account = await sut.find();
+      const flavours = await sut.find();
 
-      expect(account).toBeTruthy();
-      expect(account.length).toBeGreaterThan(0);
+      expect(flavours).toBeTruthy();
+      expect(flavours.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('findById()', () => {
+    test('Should return an array when passed array of ids', async () => {
+      const sut = makeSut();
+
+      const flavours = (await sut.findById({
+        id: [1, 2, 3],
+      })) as FlavourModel[];
+
+      expect(flavours).toBeTruthy();
+      expect(flavours.length).toBe(3);
+    });
+
+    test('Should return a flavour when passed id', async () => {
+      const sut = makeSut();
+
+      const flavours = (await sut.findById({
+        id: 1,
+      })) as FlavourModel;
+
+      expect(flavours).toBeTruthy();
+      expect(flavours.id).toBe(1);
     });
   });
 });

@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { PersonalizationModel } from '/src/domain/models';
+import { PersonalizationModel } from 'src/domain/models';
 
 export const createPersonalizations = async () => {
   const personalizations: Pick<

@@ -7,8 +7,8 @@ export const badRequest = (error: Error): HttpResponse => ({
   name: error?.name,
 });
 
-export const notFound = (): HttpResponse => ({
-  body: null,
+export const notFound = (error?: Error): HttpResponse => ({
+  body: error?.message,
   statusCode: 404,
 });
 
@@ -20,14 +20,4 @@ export const serverError = (error: Error): HttpResponse => ({
 export const ok = (data: any): HttpResponse => ({
   statusCode: 200,
   body: data,
-});
-
-export const createdSuccess = (data: any): HttpResponse => ({
-  statusCode: 201,
-  body: data,
-});
-
-export const noContent = (): HttpResponse => ({
-  statusCode: 204,
-  body: null,
 });

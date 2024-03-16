@@ -1,0 +1,8 @@
+model Order {
+    id                   Int      @id @default(autoincrement())
+    total                Float
+    totalPreparationTime Int      @map("total_preparation_time")
+    createdAt            DateTime @map("created_at")
+
+    @@map("tb_order")
+}
