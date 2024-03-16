@@ -43,6 +43,18 @@ describe('FindOrderById UseCase', () => {
     expect(findSpy).toHaveBeenCalledTimes(1);
   });
 
+  test('Should throw if FindOrderByIdRepository throws', async () => {
+    const { sut, findOrderByIdRepository } = makeSut();
+    jest
+      .spyOn(findOrderByIdRepository, 'find')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error())),
+      );
+
+    const promise = sut.find({ id: 1 });
+    await expect(promise).rejects.toThrow();
+  });
+
   test('Should throws OrderNotFoundError when invalid id', async () => {
     try {
       const { sut } = makeSut();
