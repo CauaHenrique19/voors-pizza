@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { CREATE_ORDER_FACTORY } from 'src/main/factories/providers';
-import { CreateOrderUseCase } from 'src/domain/usecases/order';
+import { CreateOrderUseCase } from 'src/domain/usecases';
 import { Controller } from 'src/presentation/protocols';
 import { CreateOrderController } from 'src/presentation/controllers';
 

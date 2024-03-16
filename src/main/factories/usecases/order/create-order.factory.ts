@@ -1,5 +1,6 @@
 import { Provider } from '@nestjs/common';
 import { CREATE_ORDER_FACTORY } from 'src/main/factories/providers';
+import { CreateOrderUseCase } from 'src/domain/usecases';
 import {
   FlavourPrismaRepository,
   OrderItemPrismaRepository,
@@ -21,7 +22,7 @@ export const createOrderFactory: Provider = {
     orderItemPrismaRepository: OrderItemPrismaRepository,
     personalizationOrderItemPrismaRepository: PersonalizationOrderItemPrismaRepository,
     prismaTransactionManager: PrismaTransactionManager,
-  ) => {
+  ): CreateOrderUseCase => {
     return new CreateOrder(
       flavourPrismaRepository,
       sizePrismaRepository,

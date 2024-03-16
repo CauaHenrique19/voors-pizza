@@ -1,4 +1,4 @@
-import { CreateOrderUseCase } from 'src/domain/usecases/order';
+import { CreateOrderUseCase } from 'src/domain/usecases';
 import {
   CreateOrderItemRepository,
   CreateOrderRepository,

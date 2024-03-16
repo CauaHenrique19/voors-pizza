@@ -1,5 +1,5 @@
 import { Controller, HttpResponse } from 'src/presentation/protocols';
-import { CreateOrderUseCase } from 'src/domain/usecases/order';
+import { CreateOrderUseCase } from 'src/domain/usecases';
 import {
   badRequest,
   notFound,
