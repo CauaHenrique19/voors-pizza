@@ -1,0 +1,13 @@
+model OrderItem {
+    id        Int      @id @default(autoincrement())
+    orderId   Int      @map("order_id")
+    sizeId    Int      @map("size_id")
+    flavourId Int      @map("flavour_id")
+    createdAt DateTime @map("created_at")
+
+    order   Order   @relation(fields: [orderId], references: [id])
+    size    Size    @relation(fields: [sizeId], references: [id])
+    flavour Flavour @relation(fields: [flavourId], references: [id])
+
+    @@map("tb_order_item")
+}
