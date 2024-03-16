@@ -13,5 +13,5 @@ export namespace CreateOrderUseCase {
     })[];
   };
 
-  export type Result = OrderModel;
+  export type Result = Omit<OrderModel, 'itens'>;
 }
