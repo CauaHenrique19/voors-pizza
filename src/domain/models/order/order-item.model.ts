@@ -1,4 +1,9 @@
-import { FlavourModel, SizeModel, OrderModel } from 'src/domain/models';
+import {
+  FlavourModel,
+  SizeModel,
+  OrderModel,
+  PersonalizationOrderItemModel,
+} from 'src/domain/models';
 
 export interface OrderItemModel {
   id: number;
@@ -10,4 +15,5 @@ export interface OrderItemModel {
   order: OrderModel;
   size: SizeModel;
   flavour: FlavourModel;
+  personalizations: PersonalizationOrderItemModel[];
 }
