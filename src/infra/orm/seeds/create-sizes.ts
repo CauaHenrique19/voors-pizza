@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { SizeModel } from '/src/domain/models';
+import { SizeModel } from 'src/domain/models';
 
 export const createSizes = async () => {
   const sizes: Pick<
