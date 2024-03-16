@@ -1,5 +1,6 @@
 import { FindSizesRepository } from 'src/data/protocols/db';
 import { FindSizes } from 'src/data/usecases';
+import { SizesNotFoundError } from 'src/domain/errors';
 import { SizeModel } from 'src/domain/models';
 
 export const makeFakeSizes = (): SizeModel[] => [
@@ -75,6 +76,21 @@ describe('FindSizes UseCase', () => {
 
     const promise = sut.find();
     await expect(promise).rejects.toThrow();
+  });
+
+  test('Should throws SizesNotFoundError when not found flavors', async () => {
+    try {
+      const { sut, findSizesRepositoryStub } = makeSut();
+
+      jest
+        .spyOn(findSizesRepositoryStub, 'find')
+        .mockReturnValueOnce(new Promise((resolve) => resolve([])));
+
+      await sut.find();
+      expect(true).toBe(true);
+    } catch (error) {
+      expect(error).toBeInstanceOf(SizesNotFoundError);
+    }
   });
 
   test('Should return sizes on success', async () => {

@@ -1,4 +1,5 @@
 import { FindFlavoursRepository } from 'src/data/protocols/db';
+import { FlavoursNotFoundError } from 'src/domain/errors';
 import { FindFlavoursUseCase } from 'src/domain/usecases';
 
 export class FindFlavours implements FindFlavoursUseCase {
@@ -7,6 +8,12 @@ export class FindFlavours implements FindFlavoursUseCase {
   ) {}
 
   async find(): Promise<FindFlavoursUseCase.Result> {
-    return await this.findFlavoursRepository.find();
+    const flavours = await this.findFlavoursRepository.find();
+
+    if (!flavours.length) {
+      throw new FlavoursNotFoundError();
+    }
+
+    return flavours;
   }
 }

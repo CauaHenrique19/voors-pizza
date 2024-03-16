@@ -1,3 +1,4 @@
+import { FlavoursNotFoundError } from 'src/domain/errors';
 import { FindFlavoursUseCase } from 'src/domain/usecases';
 import { FindFlavoursController } from 'src/presentation/controllers';
 import { notFound, ok, serverError } from 'src/presentation/helpers';
@@ -47,12 +48,14 @@ describe('Find Flavours Controller', () => {
 
   test('Should return 404 if not found flavours', async () => {
     const { sut, findFlavoursStub } = makeSut();
-    jest
-      .spyOn(findFlavoursStub, 'find')
-      .mockReturnValueOnce(new Promise((resolve) => resolve([])));
+
+    const error = new FlavoursNotFoundError();
+    jest.spyOn(findFlavoursStub, 'find').mockImplementationOnce(() => {
+      throw error;
+    });
 
     const httpResponse = await sut.handle();
-    expect(httpResponse).toEqual(notFound());
+    expect(httpResponse).toEqual(notFound(error));
   });
 
   test('Should return 500 if findFlavours throws', async () => {

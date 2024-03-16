@@ -5,6 +5,7 @@ import { FlavourController } from 'src/main/controllers/flavour/flavour.controll
 import { FindFlavoursUseCase } from 'src/domain/usecases';
 import { FindFlavoursController } from 'src/presentation/controllers';
 import { BuildFindFlavoursControllerFactory } from 'src/main/factories/controllers';
+import { FlavoursNotFoundError } from 'src/domain/errors';
 
 const makeFindFlavour = () => {
   class FindFlavoursStub implements FindFlavoursUseCase {
@@ -46,6 +47,10 @@ describe('Flavour Controller', () => {
 
     it('Should return 404 on load flavours', async () => {
       const { findFlavoursStub } = makeSut();
+
+      jest.spyOn(findFlavoursStub, 'find').mockImplementationOnce(() => {
+        throw new FlavoursNotFoundError();
+      });
 
       const moduleRef = await Test.createTestingModule({
         imports: [FlavourModule],

@@ -14,7 +14,7 @@ import { makeFakePersonalizations } from 'test/data/usecases/personalization/fin
 import { TransactionManager } from 'src/data/protocols/transaction-manager';
 import {
   FlavourNotFoundError,
-  PersonalizationNotFound,
+  PersonalizationNotFoundError,
   RepeatedPersonalizationError,
   SizeNotFoundError,
 } from 'src/domain/errors';
@@ -202,7 +202,7 @@ describe('Create Order', () => {
       await sut.create(makeFakeItensWithInvalidPersonalization());
       expect(true).toBe(true);
     } catch (error) {
-      expect(error).toBeInstanceOf(PersonalizationNotFound);
+      expect(error).toBeInstanceOf(PersonalizationNotFoundError);
     }
   });
 

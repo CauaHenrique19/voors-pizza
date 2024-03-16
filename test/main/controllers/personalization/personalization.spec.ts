@@ -5,6 +5,7 @@ import { PersonalizationController } from 'src/main/controllers/personalization/
 import { FindPersonalizationsUseCase } from 'src/domain/usecases';
 import { FindPersonalizationsController } from 'src/presentation/controllers';
 import { BuildFindPersonalizationsControllerFactory } from 'src/main/factories/controllers';
+import { PersonalizationsNotFoundError } from 'src/domain/errors';
 
 const makeFindPersonalizations = () => {
   class FindPersonalizationsStub implements FindPersonalizationsUseCase {
@@ -46,6 +47,12 @@ describe('Personalization Controller', () => {
 
     it('Should return 404 on load personalizations', async () => {
       const { findPersonalizationsStub } = makeSut();
+
+      jest
+        .spyOn(findPersonalizationsStub, 'find')
+        .mockImplementationOnce(() => {
+          throw new PersonalizationsNotFoundError();
+        });
 
       const moduleRef = await Test.createTestingModule({
         imports: [PersonalizationModule],

@@ -8,7 +8,7 @@ import {
 import { CreateOrderUseCase } from 'src/domain/usecases/order';
 import {
   FlavourNotFoundError,
-  PersonalizationNotFound,
+  PersonalizationNotFoundError,
   RepeatedPersonalizationError,
   SizeNotFoundError,
 } from 'src/domain/errors';
@@ -106,7 +106,7 @@ describe('Create Order Controller', () => {
   test('Should return 404 if not found personalization', async () => {
     const { sut, createOrderStub } = makeSut();
 
-    const error = new PersonalizationNotFound();
+    const error = new PersonalizationNotFoundError();
     jest.spyOn(createOrderStub, 'create').mockImplementationOnce(() => {
       throw error;
     });

@@ -2,6 +2,7 @@ import { FindPersonalizationsUseCase } from 'src/domain/usecases';
 import { makeFakePersonalizations } from 'test/data/usecases/personalization/find-personalizations.spec';
 import { FindPersonalizationsController } from 'src/presentation/controllers';
 import { notFound, ok, serverError } from 'src/presentation/helpers';
+import { PersonalizationsNotFoundError } from 'src/domain/errors';
 
 const fakePersonalizations = makeFakePersonalizations();
 
@@ -47,12 +48,14 @@ describe('Find Personalizations Controller', () => {
 
   test('Should return 404 if not found personalizations', async () => {
     const { sut, findPersonalizationsStub } = makeSut();
-    jest
-      .spyOn(findPersonalizationsStub, 'find')
-      .mockReturnValueOnce(new Promise((resolve) => resolve([])));
+
+    const error = new PersonalizationsNotFoundError();
+    jest.spyOn(findPersonalizationsStub, 'find').mockImplementationOnce(() => {
+      throw error;
+    });
 
     const httpResponse = await sut.handle();
-    expect(httpResponse).toEqual(notFound());
+    expect(httpResponse).toEqual(notFound(error));
   });
 
   test('Should return 500 if findPersonalizations throws', async () => {

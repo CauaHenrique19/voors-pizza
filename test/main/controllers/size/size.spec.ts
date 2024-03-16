@@ -5,6 +5,7 @@ import { FindSizesController } from 'src/presentation/controllers';
 import { BuildFindSizesControllerFactory } from 'src/main/factories/controllers';
 import { SizeModule } from 'src/main/controllers/size/size.module';
 import { SizeController } from 'src/main/controllers/size/size.controller';
+import { SizesNotFoundError } from 'src/domain/errors';
 
 const makeFindSizes = () => {
   class FindSizesStub implements FindSizesUseCase {
@@ -44,8 +45,12 @@ describe('Size Controller', () => {
       await request(app.getHttpServer()).get(`/sizes/`).expect(200);
     });
 
-    it('Should return 404 on load personalizations', async () => {
+    it('Should return 404 on load sizes', async () => {
       const { findSizesStub } = makeSut();
+
+      jest.spyOn(findSizesStub, 'find').mockImplementationOnce(() => {
+        throw new SizesNotFoundError();
+      });
 
       const moduleRef = await Test.createTestingModule({
         imports: [SizeModule],

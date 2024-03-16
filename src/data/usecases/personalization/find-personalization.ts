@@ -1,4 +1,5 @@
 import { FindPersonalizationsRepository } from 'src/data/protocols/db';
+import { PersonalizationsNotFoundError } from 'src/domain/errors';
 import { FindPersonalizationsUseCase } from 'src/domain/usecases';
 
 export class FindPersonalizations implements FindPersonalizationsUseCase {
@@ -7,6 +8,12 @@ export class FindPersonalizations implements FindPersonalizationsUseCase {
   ) {}
 
   async find(): Promise<FindPersonalizationsUseCase.Result> {
-    return await this.findPersonalizationsRepository.find();
+    const personalizations = await this.findPersonalizationsRepository.find();
+
+    if (!personalizations.length) {
+      throw new PersonalizationsNotFoundError();
+    }
+
+    return personalizations;
   }
 }

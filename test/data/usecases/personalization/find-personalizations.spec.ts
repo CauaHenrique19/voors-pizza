@@ -1,5 +1,6 @@
 import { FindPersonalizationsRepository } from 'src/data/protocols/db';
 import { FindPersonalizations } from 'src/data/usecases';
+import { PersonalizationsNotFoundError } from 'src/domain/errors';
 import { PersonalizationModel } from 'src/domain/models';
 
 export const makeFakePersonalizations = (): PersonalizationModel[] => [
@@ -76,6 +77,21 @@ describe('FindPersonalizations UseCase', () => {
 
     const promise = sut.find();
     await expect(promise).rejects.toThrow();
+  });
+
+  test('Should throws PersonalizationsNotFound when not found flavors', async () => {
+    try {
+      const { sut, findPersonalizationsRepositoryStub } = makeSut();
+
+      jest
+        .spyOn(findPersonalizationsRepositoryStub, 'find')
+        .mockReturnValueOnce(new Promise((resolve) => resolve([])));
+
+      await sut.find();
+      expect(true).toBe(true);
+    } catch (error) {
+      expect(error).toBeInstanceOf(PersonalizationsNotFoundError);
+    }
   });
 
   test('Should return personalizations on success', async () => {

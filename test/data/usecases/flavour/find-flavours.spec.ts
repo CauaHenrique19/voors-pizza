@@ -1,5 +1,6 @@
 import { FindFlavoursRepository } from 'src/data/protocols/db';
 import { FindFlavours } from 'src/data/usecases';
+import { FlavoursNotFoundError } from 'src/domain/errors';
 import { FlavourModel } from 'src/domain/models';
 
 export const makeFakeFlavours = (): FlavourModel[] => [
@@ -70,6 +71,20 @@ describe('FindFlavours UseCase', () => {
 
     const promise = sut.find();
     await expect(promise).rejects.toThrow();
+  });
+
+  test('Should throws FlavoursNotFoundError when not found flavors', async () => {
+    try {
+      const { sut, findFlavoursRepositoryStub } = makeSut();
+
+      jest
+        .spyOn(findFlavoursRepositoryStub, 'find')
+        .mockReturnValueOnce(new Promise((resolve) => resolve([])));
+
+      await sut.find();
+    } catch (error) {
+      expect(error).toBeInstanceOf(FlavoursNotFoundError);
+    }
   });
 
   test('Should return flavours on success', async () => {
