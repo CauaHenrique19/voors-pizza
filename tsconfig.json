@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "test/*": ["./test/*"],
-      "/*": ["*"]
+      "*": ["*"]
     }
   }
 }
