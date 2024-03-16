@@ -1,3 +1,4 @@
+import { SizesNotFoundError } from 'src/domain/errors';
 import { FindSizesUseCase } from 'src/domain/usecases';
 import { FindSizesController } from 'src/presentation/controllers';
 import { notFound, ok, serverError } from 'src/presentation/helpers';
@@ -47,12 +48,14 @@ describe('Find Sizes Controller', () => {
 
   test('Should return 404 if not found sizes', async () => {
     const { sut, findSizesStub } = makeSut();
-    jest
-      .spyOn(findSizesStub, 'find')
-      .mockReturnValueOnce(new Promise((resolve) => resolve([])));
+
+    const error = new SizesNotFoundError();
+    jest.spyOn(findSizesStub, 'find').mockImplementationOnce(() => {
+      throw error;
+    });
 
     const httpResponse = await sut.handle();
-    expect(httpResponse).toEqual(notFound());
+    expect(httpResponse).toEqual(notFound(error));
   });
 
   test('Should return 500 if size throws', async () => {
