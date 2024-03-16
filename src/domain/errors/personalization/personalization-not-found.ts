@@ -1,6 +1,6 @@
-export class PersonalizationNotFound extends Error {
+export class PersonalizationNotFoundError extends Error {
   constructor() {
     super('Personalization Not Found');
-    this.name = 'PersonalizationNotFound';
+    this.name = 'PersonalizationNotFoundError';
   }
 }
