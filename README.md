@@ -142,3 +142,7 @@ Baseado na minha experiência, implementei um gerenciamento de git utilizando gi
 - `feature/flavour`
 - `feature/order`
 - `feature/misc`
+
+Para cada versão final, criei uma tag com a respectiva identificação de versão. Como só há uma versão a `1.0.0`, só existe uma tag.
+
+- `1.0.0`
