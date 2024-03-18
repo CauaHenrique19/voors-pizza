@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpStatus,
   Inject,
   Param,
   ParseIntPipe,
@@ -13,6 +14,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -35,6 +37,51 @@ export class OrderController {
     private readonly buildFindOrderByIdControllerFactory: BuildFindOrderByIdControllerFactory,
   ) {}
 
+  @ApiBody({
+    examples: {
+      'Com personalizações': {
+        description: 'Pedido com personalizações',
+        value: {
+          items: [
+            {
+              flavourId: 1,
+              sizeId: 1,
+              personalizations: [1, 2, 3],
+            },
+          ],
+        } as CreateOrderDTO,
+      },
+      'Sem personalizações': {
+        description: 'Pedido sem personalizações',
+        value: {
+          items: [
+            {
+              flavourId: 1,
+              sizeId: 1,
+            },
+          ],
+        } as CreateOrderDTO,
+      },
+      'Com mais de 1 item': {
+        description: 'Pedido com mais 1 item',
+        value: {
+          items: [
+            {
+              flavourId: 1,
+              sizeId: 1,
+              personalizations: [1, 2, 3],
+            },
+            {
+              flavourId: 2,
+              sizeId: 2,
+              personalizations: [1, 2],
+            },
+          ],
+        } as CreateOrderDTO,
+      },
+    },
+    isArray: true,
+  })
   @ApiInternalServerErrorResponse({
     description: 'Erro inesperado na execução',
   })
