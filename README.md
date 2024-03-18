@@ -24,7 +24,7 @@ Documentação com Swagger: `http://localhost:3000/api#/`
 
 A aplicação conta com 99% de cobertura de testes, cobrindo da camada `Data` até a `Main`
 
-## Instalação
+## Instalação de dependências
 
 ```bash
 $ npm install
@@ -55,7 +55,7 @@ $ npm run test:cov
 
 ## Docker
 
-A aplicação foi construída para ser executada com containers, então ela está pronta para ser utilizada com docker.
+A aplicação foi construída para ser executada com containers, então para construir a imagem da `API` e do `POSTGRES` utilize esse comando abaixo:
 
 ```bash
 # build image
@@ -66,7 +66,7 @@ $ docker-compose up
 
 ## Modelagem
 
-De acordo com meus conhecimentos em modelagem, criei essa estrutura que consegue entregar flexibilidade permitindo o cadastro de novos sabores, tamanhos e personalizações. Também optei por salvar as informações de tempo total de preparo e valor do pedido em banco para evitar cálculos via código.
+De acordo com meus conhecimentos em modelagem, criei essa estrutura que consegue entregar flexibilidade permitindo o cadastro de novos sabores, tamanhos e personalizações. Também optei por salvar as informações de tempo total de preparo e valor do pedido em banco para evitar cálculos via código. Algumas tabelas poderiam ser abstraídas em uma mais genèrica, porém escolhi criar tabelas específicas para dividir melhor os dados, facilitando a busca e entendimento.
 
 Adicionei o campo `createdAt` em todas as tabelas para permitir auditoria simples sobre informações de cadastro do registro.
 
@@ -86,6 +86,10 @@ Legenda:
   representa os sabores de pizza disponíveis
 
 &nbsp;&nbsp;![Database Diagram](./db-diagram.png)
+
+## Transações
+
+Para garantir a integridade de operações, utilizei do Prisma para gerenciar transactions em banco de dados. Então em toda criação de pedido, é garantido que as informações só serão cadastradas caso todas ocorram normalmente, caso haja um erro inesperado em uma das operações, todo o resto é cancelado. Assim garantindo que todos dados presentes no banco são consistentes e completos.
 
 ## Endpoints
 
@@ -138,3 +142,7 @@ Baseado na minha experiência, implementei um gerenciamento de git utilizando gi
 - `feature/flavour`
 - `feature/order`
 - `feature/misc`
+
+Para cada versão final, criei uma tag com a respectiva identificação de versão. Como só há uma versão a `1.0.0`, só existe uma tag.
+
+- `1.0.0`

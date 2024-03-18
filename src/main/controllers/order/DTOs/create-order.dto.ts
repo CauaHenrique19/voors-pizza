@@ -9,8 +9,8 @@ import {
 } from 'class-validator';
 
 export class CreateOrderDTO {
-  @IsArray()
-  @ArrayMinSize(1)
+  @IsArray({ message: "items deve ser um arrayy" })
+  @ArrayMinSize(1, { message: 'items deve conter ao menos 1 item' })
   @ValidateNested({ each: true })
   @Type(() => OrderItemDTO)
   items: OrderItemDTO[];
