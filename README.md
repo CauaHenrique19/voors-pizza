@@ -1,6 +1,6 @@
 # VoorsPizza - API
 
-## Description
+## Descrição
 
 API contruída com NestJS, Typescript e NodeJs para receber pedidos de uma pizzaria.
 
