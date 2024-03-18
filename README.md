@@ -30,6 +30,22 @@ A aplicação conta com 99% de cobertura de testes, cobrindo da camada `Data` at
 $ npm install
 ```
 
+## Migrations
+
+As migrations são executadas com o prisma, então com o seguinte comando, o banco de dados e tabelas são criadas
+
+```bash
+$ npx prisma migrate dev --name init
+```
+
+## Seeds
+
+As migrations são executadas com o prisma, então com o seguinte comando, os dados iniciais são criados.
+
+```bash
+$ npx prisma db seed
+```
+
 ## Rodando em localhost
 
 ```bash
